@@ -74,3 +74,24 @@ C_JUMP = {
     'JLE' : '110',
     'JMP' : '111',
 }
+
+MAX_BITS = 16
+
+def __convert_a(i):
+    binary = str(bin(i.address))[2:]
+    return binary.zfill(16)
+
+def __convert_c(i):
+    comp = C_COMP[i.comp]
+    dest = C_DEST[i.dest] if i.dest else C_DEST['null']
+    jump = C_JUMP[i.jump] if i.jump else C_JUMP['null']
+    return str.format('111{}{}{}', comp, dest, jump)
+
+def to_binary(instructions):
+    result = []
+    for i in instructions:
+        if type(i) is AInstruction:
+            result.append(__convert_a(i))
+        elif type(i) is CInstruction:
+            result.append(__convert_c(i))
+    return result

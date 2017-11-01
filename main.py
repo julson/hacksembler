@@ -1,9 +1,16 @@
 #!/usr/bin/env python3
 
-import sys
-import parser
+import sys, os, parser, code
 
-with open(sys.argv[1]) as f:
-    instructions = parser.parse(f)
-    for i in instructions:
-        print(i)
+filename, ext = os.path.splitext(sys.argv[1])
+
+if ext != '.asm':
+    sys.exit('Input file must use the .asm extension')
+
+out_filename = filename + '.hack'
+
+with open(sys.argv[1]) as inp, open(out_filename, 'w') as out:
+    instructions = parser.parse(inp)
+    binary = code.to_binary(instructions)
+    for b in binary:
+        out.write(b + '\n')
