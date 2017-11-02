@@ -1,26 +1,5 @@
+from core import AInstruction, CInstruction
 # Maps parsed tokens into machine code
-
-class AInstruction:
-    def __init__(self, addr):
-        self.address = addr
-
-    def __str__(self):
-        return str.format('@{}', self.address)
-
-class CInstruction:
-    def __init__(self, dest, comp, jump):
-        self.dest = dest
-        self.comp = comp
-        self.jump = jump
-
-    def __str__(self):
-        text = self.comp
-        if self.dest:
-            text = self.dest + '=' + text
-        if self.jump:
-            text = text + ';' + self.jump
-        return text
-
 
 C_DEST = {
     'null' : '000',
